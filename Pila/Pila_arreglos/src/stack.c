@@ -7,7 +7,9 @@
  * @details Esta función inicializa una pila vacía.
  */
 Stack stack_create(){
-
+    Stack s;
+    s.top =-1;
+    return s;
 }
 
 /**
@@ -19,7 +21,14 @@ Stack stack_create(){
  *          la función no realiza ninguna operación.
  */
 void stack_push(Stack* s, Data d){
-
+    if(s->data[TAM-1]){
+        printf("La pila está llena");
+        return;
+    }
+    s->top=0;
+    s->data[s->top]=d;
+    s->top++;
+    return;
 }
 
 /**
@@ -32,7 +41,9 @@ void stack_push(Stack* s, Data d){
  *          Si la pila está vacía, no se realiza ninguna operación y se devuelve un valor de error.
  */
 Data stack_pop(Stack* s){
-
+    s->data[s->top];
+    s->top--;
+    return s->data;
 }
 
 /**
@@ -44,7 +55,7 @@ Data stack_pop(Stack* s){
  *          como `stack_pop` en una pila vacía.
  */
 int stack_is_empty(Stack* s){
-
+    return s->top == -1;
 }
 
 /**
@@ -54,7 +65,11 @@ int stack_is_empty(Stack* s){
  * @details Esta función hace que top sea igual a -1
  */
 void stack_empty(Stack* s){
-
+    for(int i=s->top;i>-1;i--){
+        s->data[s->top];
+        s->top--;
+    }
+return;
 }
 
 
@@ -68,5 +83,13 @@ void stack_empty(Stack* s){
  *          la salida estándar (stdout).
  */
 void stack_print(Stack *s){
+    if(s->data[-1]){
+        printf("La pila esta vacia");
+        return;
+    }
+    for(int i=s->data; i>-1; i--)
+    printf("Los datos de la pila son:\t%d \n",s->data[i]);
+    return;
+
 
 }

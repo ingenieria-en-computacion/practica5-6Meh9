@@ -19,5 +19,6 @@ bool queue_is_empty(Queue*);
 Data queue_front(Queue*);
 void queue_empty(Queue*);
 void queue_delete(Queue*);
+void queue_print()
 
 #endif // __QUEUE_H__

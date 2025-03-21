@@ -9,7 +9,11 @@
  * @details Esta función inicializa una cola vacía. 
  */
 Queue queue_create(){
-
+    Queue q;
+    q.len=0;
+    q.head =-1;
+    q.tail=1;
+    return q;
 }
 
 /**
@@ -20,7 +24,19 @@ Queue queue_create(){
  * @details Esta función añade el dato `d` al final de la cola.
  */
 void queue_enqueue(Queue* q, Data d){
-
+    if(es_vacia(*q)){
+        q->head = q->tail=0;
+        q->datos[q->head]=d;
+        return;
+    }else{
+    if(q->tail<TAM-1){
+        q->tail++;
+        q->datos[q->tail]=d;
+        q->len++;
+        return;
+    }
+    printf("La cola està llena \n");//agrega elemento al final de la cola   
+    }
 }
 
 /**
@@ -33,7 +49,16 @@ void queue_enqueue(Queue* q, Data d){
  *          Si la cola está vacía, no se realiza ninguna operación y se devuelve un valor de error.
  */
 Data queue_dequeue(Queue* q){
-
+    if(es_vacia (*q)){
+        for(int i=1; i<=q->tail; i++)
+            q->datos[i-1] = q->datos[i]; //recorre el arreglo
+            return; 
+    }
+    for(int i=1; i<=q->tail; i++){
+    q->datos[i-1] = q->datos[i]; //recorre el arreglo
+    return q->datos;
+    printf("La cola esta vacia \n");
+    }
 }
 
 /**
@@ -45,6 +70,8 @@ Data queue_dequeue(Queue* q){
  *          como `queue_dequeue` en una cola vacía.
  */
 bool queue_is_empty(Queue* q){
+    if(!q) return NULL;
+    return q->tail == -1;
 
 }
 
@@ -57,7 +84,14 @@ bool queue_is_empty(Queue* q){
  *          Si la cola está vacía, no se realiza ninguna operación y se devuelve un valor de error.
  */
 Data queue_front(Queue* q){
-
+    if (!queue_is_empty(q)){
+    return -1;}
+    else {
+        if(q->tail<TAM-1)
+            q->datos[q->tail];
+            return;
+    }
+    return q->datos;
 }
 
 /**
@@ -67,6 +101,26 @@ Data queue_front(Queue* q){
  * @details Esta función hace que los índices head y tail tomen el valor de -1
  */
 void queue_empty(Queue* q){
+    if(es_vacia (*q)){
+        printf("la cola esta vacia");
+        return; 
+    }else {
+    for(int i=1; i<=q->tail; i++){
+    q->datos[i-1] = q->datos[i]; //recorre el arreglo
+    q->len--;
+    return q->datos;
+    printf("La cola esta vacia \n");
+    }
+}
+}
 
+void queue_print(Queue q){
+    
+    if(q.datos==NULL)
+    printf("La cola està vacìa");
+    
+    for (int i=0; i < q.tail; i++)
+    printf("\n Los datos de la cola son: %d \t \n", q.datos[i]);
+    
 }
 

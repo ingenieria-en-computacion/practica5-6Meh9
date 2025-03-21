@@ -8,8 +8,11 @@
  *          Si la asignación de memoria falla, la función devuelve NULL. La pila creada
  *          está vacía y top apunta a NULL
  */
-Stack *stack_create(){
-
+Stack *stack_creat(){
+    Stack *s = (Stack*)malloc(sizeof(Stack));
+    if(!s) return NULL;
+    s->top = NULL; //-1 es un indice no valido 
+    return s;
 }
 
 /**
@@ -21,7 +24,11 @@ Stack *stack_create(){
  *          o el puntero `s` es NULL, la función no realiza ninguna operación.
  */
 void stack_push(Stack* s, Data d){
-
+    if (!s) return; 
+    Node* new_node = node_creat(d);
+    if (!new_node) return; 
+    new_node->next = s->top;
+    s->top = new_node;
 }
 
 /**
@@ -34,7 +41,12 @@ void stack_push(Stack* s, Data d){
  *          Si la pila está vacía, no se realiza ninguna operación y se devuelve un valor de error.
  */
 Data stack_pop(Stack* s){
-
+    if (!s) return (Data)-1; 
+    Node* tmp = s->top;
+    Data d = tmp->data;
+    s->top = tmp->next;
+    free(tmp);
+    return d;
 }
 
 /**
@@ -45,8 +57,9 @@ Data stack_pop(Stack* s){
  * @details Esta función comprueba si la pila no contiene elementos. Es útil para evitar operaciones
  *          como `stack_pop` en una pila vacía.
  */
-int stack_is_empty(Stack* s){
-
+bool stack_is_empty(Stack* s){
+    if(!s) return true;
+    return s->top == NULL;
 }
 
 /**
@@ -58,7 +71,10 @@ int stack_is_empty(Stack* s){
  *          La memoria de los elementos eliminados se libera adecuadamente.
  */
 void stack_empty(Stack* s){
-
+    if (!s) return;
+    while (!stack_is_empty(s)) {
+        stack_pop(s);
+    }
 }
 
 /**
@@ -71,7 +87,9 @@ void stack_empty(Stack* s){
  *          de ser eliminada.
  */
 void stack_delete(Stack *s){
-
+    if (!s) return;
+    stack_empty(s);
+    free(s);
 }
 
 /**
@@ -84,5 +102,14 @@ void stack_delete(Stack *s){
  *          la salida estándar (stdout).
  */
 void stack_print(Stack *s){
-
+    if (stack_is_empty(s)) {
+        printf("La pila esta vacia \n");
+        return;
+    }
+    Node* current = s->top;
+    while (current) {
+        printf("Elemento de pila %c ", current->data);
+        current = current->next;
+    }
+    printf("\n");
 }
