@@ -1,14 +1,21 @@
 #ifndef __NODE_H__
 #define __NODE_H__
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
 
-typedef int Data;
-typedef struct Node {
-    Data data;
-    struct Node* next;
-} Node;
+typedef char Data;
 
-Node *new_node(Data);
-void delete_node(Node*);
-void print_node(Node*);
+struct node{
+    char data;
+    struct node *next;
+};
+
+typedef struct node Node;
+
+Node *node_creat(char d);
+void node_destroy(Node *n);
+void node_print(Node *n);
+
 
 #endif
